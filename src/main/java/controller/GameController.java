@@ -20,7 +20,19 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+
+enum Color {
+    RED,
+    WHITE,
+    BLUE,
+    PINK,
+    ORANGE,
+    PURPLE,
+    YELLOW,
+    GREEN,
+}
 
 @Slf4j
 public class GameController {
@@ -28,6 +40,8 @@ public class GameController {
     private String userName;
     private int stepCount;
     private Instant beginGame;
+    private HashMap<Color, Image> colors;
+    int i=0;
 
 
     @FXML
@@ -41,6 +55,53 @@ public class GameController {
 
     @FXML
     private GridPane colorPane;
+
+    public GameController() {
+        colors = new HashMap<Color, Image>();
+
+        colors.put(Color.RED, new Image(getClass().getResource("/images/red.png").toExternalForm()));
+        colors.put(Color.WHITE, new Image(getClass().getResource("/images/white.png").toExternalForm()));
+        colors.put(Color.BLUE, new Image(getClass().getResource("/images/blue.png").toExternalForm()));
+        colors.put(Color.PINK, new Image(getClass().getResource("/images/pink.png").toExternalForm()));
+        colors.put(Color.ORANGE, new Image(getClass().getResource("/images/orange.png").toExternalForm()));
+        colors.put(Color.PURPLE, new Image(getClass().getResource("/images/purple.png").toExternalForm()));
+        colors.put(Color.YELLOW, new Image(getClass().getResource("/images/yellow.png").toExternalForm()));
+        colors.put(Color.GREEN, new Image(getClass().getResource("/images/green.png").toExternalForm()));
+    }
+
+    @FXML
+    public void processColor(ActionEvent event) {
+        String colorPressed = ((Button) event.getSource()).getText();
+        System.out.println(colorPressed);
+                ImageView view = (ImageView) leftPane.getChildren().get(i);
+                switch(colorPressed){
+                    case "RED":
+                        view.setImage(colors.get(Color.RED));
+                        break;
+                    case "WHITE":
+                        view.setImage(colors.get(Color.WHITE));
+                        break;
+                    case "BLUE":
+                        view.setImage(colors.get(Color.BLUE));
+                        break;
+                    case "PINK":
+                        view.setImage(colors.get(Color.PINK));
+                        break;
+                    case "ORANGE":
+                        view.setImage(colors.get(Color.ORANGE));
+                        break;
+                    case "PURPLE":
+                        view.setImage(colors.get(Color.PURPLE));
+                        break;
+                    case "YELLOW":
+                        view.setImage(colors.get(Color.YELLOW));
+                        break;
+                    case "GREEN":
+                        view.setImage(colors.get(Color.GREEN));
+                        break;
+        }
+        i++;
+    }
 
    /* public void initdata(String userName) {
         this.userName = userName;
@@ -65,13 +126,5 @@ public class GameController {
         int clickedRow = rightPane.getRowIndex((Node)mouseEvent.getSource());
 
         System.out.println("right pane, (" + clickedColumn + "," + clickedRow + ")");
-    }
-    public void clickColor(MouseEvent mouseEvent) {
-
-
-        int clickedColumn = colorPane.getColumnIndex((Node)mouseEvent.getSource());
-        int clickedRow = colorPane.getRowIndex((Node)mouseEvent.getSource());
-
-        System.out.println("color pane, (" + clickedColumn + "," + clickedRow + ")");
     }
 }
