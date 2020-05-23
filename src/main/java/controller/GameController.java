@@ -2,26 +2,17 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 
-import java.io.IOException;
-import java.time.Duration;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+
 
 enum Color {
     RED,
@@ -38,10 +29,10 @@ enum Color {
 public class GameController {
 
     private String userName;
-    private int stepCount;
     private Instant beginGame;
     private HashMap<Color, Image> colors;
-    int i=0;
+    private int lastStep;
+    private int rowHelper;
 
 
     @FXML
@@ -54,7 +45,8 @@ public class GameController {
     private GridPane rightPane;
 
     @FXML
-    private GridPane colorPane;
+    private Label errorLabel;
+
 
     public GameController() {
         colors = new HashMap<Color, Image>();
@@ -72,35 +64,40 @@ public class GameController {
     @FXML
     public void processColor(ActionEvent event) {
         String colorPressed = ((Button) event.getSource()).getText();
-        System.out.println(colorPressed);
-                ImageView view = (ImageView) leftPane.getChildren().get(i);
-                switch(colorPressed){
-                    case "RED":
-                        view.setImage(colors.get(Color.RED));
-                        break;
-                    case "WHITE":
-                        view.setImage(colors.get(Color.WHITE));
-                        break;
-                    case "BLUE":
-                        view.setImage(colors.get(Color.BLUE));
-                        break;
-                    case "PINK":
-                        view.setImage(colors.get(Color.PINK));
-                        break;
-                    case "ORANGE":
-                        view.setImage(colors.get(Color.ORANGE));
-                        break;
-                    case "PURPLE":
-                        view.setImage(colors.get(Color.PURPLE));
-                        break;
-                    case "YELLOW":
-                        view.setImage(colors.get(Color.YELLOW));
-                        break;
-                    case "GREEN":
-                        view.setImage(colors.get(Color.GREEN));
-                        break;
+        errorLabel.setText("");
+        if(rowHelper != 4) {
+            ImageView view = (ImageView) leftPane.getChildren().get(lastStep);
+            switch (colorPressed) {
+                case "RED":
+                    view.setImage(colors.get(Color.RED));
+                    break;
+                case "WHITE":
+                    view.setImage(colors.get(Color.WHITE));
+                    break;
+                case "BLUE":
+                    view.setImage(colors.get(Color.BLUE));
+                    break;
+                case "PINK":
+                    view.setImage(colors.get(Color.PINK));
+                    break;
+                case "ORANGE":
+                    view.setImage(colors.get(Color.ORANGE));
+                    break;
+                case "PURPLE":
+                    view.setImage(colors.get(Color.PURPLE));
+                    break;
+                case "YELLOW":
+                    view.setImage(colors.get(Color.YELLOW));
+                    break;
+                case "GREEN":
+                    view.setImage(colors.get(Color.GREEN));
+                    break;
+            }
+            lastStep++;
+            rowHelper++;
+        }else{
+            errorLabel.setText("You need to check that you guessed correctly or not!");
         }
-        i++;
     }
 
    /* public void initdata(String userName) {
@@ -108,23 +105,22 @@ public class GameController {
         usernameLabel.setText("Current user: " + this.userName);
     }*/
 
-
-    public void clickLeft(MouseEvent mouseEvent) {
-
-
-        int clickedColumn = leftPane.getColumnIndex((Node)mouseEvent.getSource());
-        int clickedRow = leftPane.getRowIndex((Node)mouseEvent.getSource());
-
-        System.out.println("left pane, (" + clickedColumn + "," + clickedRow + ")");
-
+    public void processSubmit(ActionEvent event) {
+        if(lastStep%4==0 && lastStep!=0){
+            System.out.println("check");
+            rowHelper = 0;
+        }
+        else{
+            errorLabel.setText("You must select 4 colors to check!");
+        }
     }
 
-    public void clickRight(MouseEvent mouseEvent) {
-
-
-        int clickedColumn = rightPane.getColumnIndex((Node)mouseEvent.getSource());
-        int clickedRow = rightPane.getRowIndex((Node)mouseEvent.getSource());
-
-        System.out.println("right pane, (" + clickedColumn + "," + clickedRow + ")");
+    public void processBack(ActionEvent event) {
+        if (lastStep > 0) {
+            ImageView view = (ImageView) leftPane.getChildren().get(lastStep - 1);
+            view.setImage(null);
+            lastStep--;
+            rowHelper--;
+        }
     }
 }
