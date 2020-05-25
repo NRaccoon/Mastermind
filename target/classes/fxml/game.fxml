@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<Pane prefHeight="600.0" fx:id="mainPane"  prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
+<Pane fx:id="mainPane" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
    <children>
       <GridPane fx:id="leftPane" gridLinesVisible="true" layoutX="42.0" layoutY="74.0" prefHeight="400.0" prefWidth="200.0">
         <columnConstraints>
@@ -167,8 +167,9 @@
                <Button maxHeight="50.0" maxWidth="100.0" mnemonicParsing="false" onAction="#processColor" text="GREEN" GridPane.columnIndex="0" GridPane.rowIndex="7" />
            </children>
        </GridPane>
-      <Button layoutX="383.0" layoutY="487.0" maxHeight="25.0" maxWidth="100.0" mnemonicParsing="false" onAction="#processBack" text="Back" />
-      <Button layoutX="378.0" layoutY="530.0" maxHeight="25.0" maxWidth="100.0" mnemonicParsing="false" onAction="#processSubmit" text="Submit" />
+      <Button layoutX="369.0" layoutY="487.0" maxHeight="25.0" maxWidth="75.0" mnemonicParsing="false" onAction="#processBack" prefHeight="25.0" prefWidth="75.0" text="Back" />
+      <Button layoutX="369.0" layoutY="523.0" maxHeight="25.0" maxWidth="75.0" mnemonicParsing="false" onAction="#processSubmit" prefHeight="25.0" prefWidth="75.0" text="Submit" />
       <Label fx:id="errorLabel" layoutX="42.0" layoutY="487.0" prefHeight="96.0" prefWidth="311.0" />
+      <Button fx:id="giveupButton" layoutX="369.0" layoutY="558.0" maxHeight="25.0" maxWidth="75.0" mnemonicParsing="false" onAction="#finishGame" prefHeight="25.0" prefWidth="75.0" text="Give up" />
    </children>
 </Pane>
