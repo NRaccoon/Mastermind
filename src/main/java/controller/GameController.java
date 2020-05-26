@@ -14,11 +14,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.dialect.Ingres9Dialect;
-
+import results.GameResult;
 
 import java.io.IOException;
-import java.security.KeyStore;
 import java.time.Instant;
 import java.util.*;
 
@@ -35,9 +33,6 @@ public class GameController {
     private int gameState = 1;
 
     @FXML
-    private Label usernameLabel;
-
-    @FXML
     private GridPane leftPane;
 
     @FXML
@@ -48,6 +43,7 @@ public class GameController {
 
     @FXML
     private Pane mainPane;
+
 
     @FXML
     private Button giveupButton;
@@ -84,6 +80,7 @@ public class GameController {
         /** Random 4 szín kiválasztása (ismétlés megengedésével) a 8 szín közül*/
         rand = new Random();
         guessColors = new int[4];
+
         for (int i = 0; i < 4; i++)
             guessColors[i] = rand.nextInt(8);
 
@@ -139,12 +136,8 @@ public class GameController {
         }
     }
 
-   /* public void initdata(String userName) {
-        this.userName = userName;
-        usernameLabel.setText("Current user: " + this.userName);
-    }*/
-
     public void processSubmit(ActionEvent event) {
+        errorLabel.setText("");
         if (lastStep % 4 == 0 && lastStep != 0 && lastStep != 40) {
             int blackPin = 0;
             int whitePin = 0;
@@ -217,6 +210,15 @@ public class GameController {
         }
     }
 
+    private GameResult getResult() {
+
+        GameResult result = GameResult.builder()
+                .player(userName)
+                .steps(lastStep)
+                .build();
+        return result;
+    }
+
     public void finishGame(ActionEvent actionEvent) throws IOException {
         if (gameState == 2) {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/finish.fxml"));
@@ -230,7 +232,6 @@ public class GameController {
             stage.setScene(new Scene(root));
             stage.show();
             log.info("Finished game, loading finish scene.");
-
         }
     }
 }
