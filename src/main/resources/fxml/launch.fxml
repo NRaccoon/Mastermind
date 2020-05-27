@@ -4,18 +4,39 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LaunchController">
+<Pane fx:id="startPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LaunchController">
    <children>
-      <Label layoutX="182.0" layoutY="77.0" text="Mastermind" textFill="#002366">
+      <Label alignment="CENTER" layoutX="147.0" layoutY="62.0" prefHeight="107.0" prefWidth="306.0" text="Mastermind" textAlignment="CENTER">
          <font>
-            <Font name="MathJax_Main-Bold" size="36.0" />
+            <Font size="56.0" />
          </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#ee0101" />
+                  <Stop color="#eb7902" offset="0.15639541482238112" />
+                  <Stop color="#ebe602" offset="0.333371164831839" />
+                  <Stop color="#15eb02" offset="0.4961601029016759" />
+                  <Stop color="#00c5f7" offset="0.6671963076457459" />
+                  <Stop color="#0209eb" offset="0.829190784246964" />
+                  <Stop color="#7402ff" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
       </Label>
-      <Label layoutX="133.0" layoutY="238.0" text="Username:" />
-      <TextField fx:id="usernameTextfield" layoutX="223.0" layoutY="233.0" prefHeight="26.0" prefWidth="158.0" />
-      <Button fx:id="startButton" layoutX="249.0" layoutY="287.0" mnemonicParsing="false" onAction="#startAction" prefHeight="51.0" prefWidth="105.0" text="Start game" />
-      <Label fx:id="errorLabel" layoutX="223.0" layoutY="200.0" prefHeight="16.0" prefWidth="151.0" textFill="#e30e0e" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="126.0" layoutY="225.0" prefHeight="43.0" prefWidth="94.0" text="Username:">
+         <font>
+            <Font size="17.0" />
+         </font></Label>
+      <TextField fx:id="usernameTextfield" layoutX="220.0" layoutY="233.0" prefHeight="26.0" prefWidth="158.0" />
+      <Button fx:id="startButton" layoutX="246.0" layoutY="287.0" mnemonicParsing="false" onAction="#startAction" prefHeight="51.0" prefWidth="105.0" text="Start game" />
+      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="196.0" layoutY="200.0" prefHeight="26.0" prefWidth="205.0" textAlignment="CENTER" textFill="#b20404">
+         <font>
+            <Font size="17.0" />
+         </font></Label>
    </children>
 </Pane>

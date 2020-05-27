@@ -1,4 +1,4 @@
-package controller;
+package mastermind;
 
 public enum Color {
     RED,

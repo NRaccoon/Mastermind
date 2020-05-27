@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import results.GameResult;
 import results.GameResultDao;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,23 +39,22 @@ public class TopController {
     @FXML
     private TableColumn<GameResult, ZonedDateTime> created;
 
+    @Inject
+    private FXMLLoader fxmlLoader;
+
+    @Inject
     private GameResultDao gameResultDao;
 
     public void back(ActionEvent actionEvent) throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/launch.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/fxml/launch.fxml"));
+        Parent root = fxmlLoader.load();
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
     }
 
-
     @FXML
     public void initialize() {
-        gameResultDao = GameResultDao.getInstance();
-
-        List<GameResult> topList = gameResultDao.findBest(20);
-
         player.setCellValueFactory(new PropertyValueFactory<>("player"));
         steps.setCellValueFactory(new PropertyValueFactory<>("steps"));
         created.setCellValueFactory(new PropertyValueFactory<>("created"));
@@ -75,9 +75,9 @@ public class TopController {
             return cell;
         });
 
+        List<GameResult> topList = gameResultDao.findBest(20);
         ObservableList<GameResult> observableResult = FXCollections.observableArrayList();
         observableResult.addAll(topList);
-
         topTable.setItems(observableResult);
     }
 

@@ -28,6 +28,10 @@ public class GameResult {
     @Column(nullable = false)
     private String player;
 
+    /**
+     * Indicates whether the player has solved the puzzle.
+     */
+    private boolean solved;
 
     /**
      * The number of steps made by the player.

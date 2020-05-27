@@ -14,23 +14,29 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import mastermind.Color;
 import results.GameResult;
+import results.GameResultDao;
 
+import javax.inject.Inject;
 import java.io.IOException;
-import java.time.Instant;
 import java.util.*;
+
 
 @Slf4j
 public class GameController {
 
     private String userName;
-    private Instant beginGame;
     private HashMap<Color, Image> colors;
     private int lastStep;
     private int rowHelper;
     private Random rand;
     private int[] guessColors;
     private int gameState = 1;
+    private boolean isSolved = false;
+
+    @Inject
+    private GameResultDao gameResultDao;
 
     @FXML
     private GridPane leftPane;
@@ -47,6 +53,9 @@ public class GameController {
 
     @FXML
     private Button giveupButton;
+
+    @Inject
+    private FXMLLoader fxmlLoader;
 
 
     /**
@@ -77,7 +86,7 @@ public class GameController {
         colors.put(Color.BLACK, new Image(getClass().getResource("/images/black.png").toExternalForm()));
 
 
-        /** Random 4 szín kiválasztása (ismétlés megengedésével) a 8 szín közül*/
+
         rand = new Random();
         guessColors = new int[4];
 
@@ -186,6 +195,7 @@ public class GameController {
                 errorLabel.setText("All of your guesses are wrong!");
             }else if(blackPin == 4) {
                 gameState= 2;
+                isSolved = true;
                 giveupButton.setText("Finish");
                 errorLabel.setText("You won the game, click the Finish button!");
             }
@@ -210,28 +220,33 @@ public class GameController {
         }
     }
 
-    private GameResult getResult() {
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
+    private GameResult getResult() {
+        lastStep = (int) Math.floor(lastStep/4);
         GameResult result = GameResult.builder()
                 .player(userName)
+                .solved(isSolved)
                 .steps(lastStep)
                 .build();
         return result;
     }
 
     public void finishGame(ActionEvent actionEvent) throws IOException {
-        if (gameState == 2) {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/finish.fxml"));
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-            log.info("Finished game, loading finish scene.");
+        gameResultDao.persist(getResult());
+
+        if (isSolved) {
+            fxmlLoader.setLocation(getClass().getResource("/fxml/finish.fxml"));
         }else{
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/fail.fxml"));
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-            log.info("Finished game, loading finish scene.");
+            fxmlLoader.setLocation(getClass().getResource("/fxml/fail.fxml"));
         }
+        Parent root = fxmlLoader.load();
+        for (int i = 0; i < 4; i++)
+            fxmlLoader.<FinishController>getController().setColor(i, colors.get(Color.getByValue(guessColors[i])));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }
