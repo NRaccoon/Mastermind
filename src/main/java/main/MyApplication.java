@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import mastermind.Color;
 import results.GameResultDao;
 import util.guice.PersistenceModule;
 import com.gluonhq.ignite.guice.GuiceContext;
@@ -31,6 +32,7 @@ public class MyApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         context.init();
+        Color.initColors();
         fxmlLoader.setLocation(getClass().getResource("/fxml/launch.fxml"));
         Parent root = fxmlLoader.load();
         primaryStage.setTitle("Mastermind");
