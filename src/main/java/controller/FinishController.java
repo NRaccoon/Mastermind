@@ -32,10 +32,20 @@ public class FinishController {
         endPane.setStyle("-fx-background-color: #A09586");
     }
 
+    /**
+     * Show us the secret colors, which had to be guessed.
+     * @param i Color position in integer (4 random color so 0, 1, 2 or 3).
+     * @param color Color value.
+     */
     public void setColor(int i, Image color) {
         ((ImageView)finishPane.getChildren().get(i)).setImage(color);
     }
 
+    /**
+     * Start the game(again).
+     * @param actionEvent Event of the action.
+     * @throws IOException Error if file not found.
+     */
     public void startGame(ActionEvent actionEvent) throws IOException {
         log.info("Loading launch scene.");
         fxmlLoader.setLocation(getClass().getResource("/fxml/launch.fxml"));
@@ -45,6 +55,11 @@ public class FinishController {
         stage.show();
     }
 
+    /**
+     * Display the leaderboard.
+     * @param actionEvent Event of the action.
+     * @throws IOException Error if file not found.
+     */
     public void leaderboardUp(ActionEvent actionEvent) throws IOException {
         fxmlLoader.setLocation(getClass().getResource("/fxml/top.fxml"));
         Parent root = fxmlLoader.load();

@@ -35,6 +35,11 @@ public class LaunchController {
         startPane.setStyle("-fx-background-color: #A09586");
     }
 
+    /**
+     * Start the game, check we were entered username or not and open the game screen.
+     * @param actionEvent Event of the action.
+     * @throws IOException Error if file not found.
+     */
     public void startAction(ActionEvent actionEvent) throws IOException {
         if (usernameTextfield.getText().isEmpty()) {
             errorLabel.setText("* Username is empty!");

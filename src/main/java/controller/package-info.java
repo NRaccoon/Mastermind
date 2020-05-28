@@ -1,0 +1,4 @@
+/**
+ * JavaFX controllers.
+ */
+package controller;

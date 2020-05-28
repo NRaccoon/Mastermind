@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Random;
 
 @Slf4j
+/**
+ * Core for the mastermind game itself.
+ */
 public class Mastermind {
     private Random rand;
 
@@ -22,6 +25,9 @@ public class Mastermind {
     @Getter
     private int[] guessColors;
 
+    /**
+     * Make 4 random color.
+     */
     public Mastermind() {
         this.rand = new Random();
         this.guessColors = new int[4];
@@ -38,6 +44,13 @@ public class Mastermind {
         guessColors[3] = 3;*/
     }
 
+    /**
+     * Return how many correct colors in good place we guessed well,
+     * and how many correct colors in bad place we guessed well.
+     * @param leftPane A grid pane, where we want to check answers.
+     * @param lastStep An integer which contain how many steps we did.
+     * @return Return values of black pins and white pins.
+     */
     public PinStruct process(GridPane leftPane, int lastStep) {
         int whitePin = 0;
         int blackPin = 0;

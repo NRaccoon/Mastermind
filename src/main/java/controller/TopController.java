@@ -25,6 +25,9 @@ import java.time.format.FormatStyle;
 import java.util.List;
 
 @Slf4j
+/**
+ * Controller class for the result screen.
+ */
 public class TopController {
 
     @FXML
@@ -45,6 +48,11 @@ public class TopController {
     @Inject
     private GameResultDao gameResultDao;
 
+    /**
+     * Go back to the main menu.
+     * @param actionEvent Event of the action.
+     * @throws IOException Error if file not found.
+     */
     public void back(ActionEvent actionEvent) throws IOException {
         fxmlLoader.setLocation(getClass().getResource("/fxml/launch.fxml"));
         Parent root = fxmlLoader.load();
@@ -53,6 +61,9 @@ public class TopController {
         stage.show();
     }
 
+    /**
+     * Initialize all the variables that we need for game result display.
+     */
     @FXML
     public void initialize() {
         player.setCellValueFactory(new PropertyValueFactory<>("player"));

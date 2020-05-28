@@ -24,6 +24,9 @@ import java.io.IOException;
 
 
 @Slf4j
+/**
+ * Controller class for the game.
+ */
 public class GameController {
 
     private String userName;
@@ -60,6 +63,10 @@ public class GameController {
         mastermind = new Mastermind();
     }
 
+    /**
+     * Set Image view to the color image (that color what we pressed).
+     * @param event Event of the action.
+     */
     @FXML
     public void processColor(ActionEvent event) {
         if (rowHelper != 4 && mastermind.getGameState() == 1) {
@@ -101,6 +108,10 @@ public class GameController {
         }
     }
 
+    /**
+     * What to do when press the Submit button.
+     * @param event Action event of the button.
+     */
     public void processSubmit(ActionEvent event) {
         errorLabel.setText("");
         if (lastStep % 4 == 0 && lastStep != 0 && lastStep != 40) {
@@ -134,6 +145,10 @@ public class GameController {
         }
     }
 
+    /**
+     * What to do when press the Back button.
+     * @param event Action event of the button.
+     */
     public void processBack(ActionEvent event) {
         if (lastStep > 0 && rowHelper > 0 && mastermind.getGameState() == 1) {
             errorLabel.setText("");
@@ -144,10 +159,18 @@ public class GameController {
         }
     }
 
+    /**
+     * Set username to our username.
+     * @param userName Username that we enter at the beginning.
+     */
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
+    /**
+     * Build the game results with Lombok.
+     * @return Built game result.
+     */
     private GameResult getResult() {
         lastStep = (int) Math.floor(lastStep/4);
         GameResult result = GameResult.builder()
@@ -158,6 +181,11 @@ public class GameController {
         return result;
     }
 
+    /**
+     * Finish the game and display fail or finish screen, depending on our performance.
+     * @param actionEvent Event of the action.
+     * @throws IOException Exception if file not found.
+     */
     public void finishGame(ActionEvent actionEvent) throws IOException {
         gameResultDao.persist(getResult());
 
